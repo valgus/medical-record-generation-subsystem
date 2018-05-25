@@ -1,0 +1,22 @@
+/**
+ * Colors
+ */
+
+a {
+  color: $color-grey;
+}
+
+.button.general {
+  background: $color-grey;
+  color: white;
+}
+
+.label {
+  color: #535353;
+  display: block;
+  font-weight: bold;
+}
+
+.error-message {
+    color: rgba(255, 0,0,1);
+}
