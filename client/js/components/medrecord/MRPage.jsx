@@ -9,6 +9,7 @@ import departmentService from '../../services/department.js'
 
 import MRGrid from './MRGrid.jsx'
 import Message from '../shared/Message.jsx'
+import Loading from '../Loading.jsx'
 
 function mapStateToProps (state) {
   return {
@@ -175,6 +176,9 @@ class MRPage extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (<Loading/>);
+    }
     return (
       <div className="content-wrapper">
         { this.state.message && <Message message={this.state.message} isError={this.state.isError} />}

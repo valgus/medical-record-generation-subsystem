@@ -15,6 +15,12 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    user: state.user
+  }
+}
+
 class LayoutPage extends Component {
 
   constructor(props) {
@@ -58,7 +64,7 @@ class LayoutPage extends Component {
             </p>
             <ul className="menu-list">
               <li><a className={(this.state.activeTab === 0) ? "is-active": ""} onClick={this.handleSidebarClick}>Departments</a></li>
-              <li><a className={(this.state.activeTab === 1) ? "is-active": ""} onClick={this.handleSidebarClick}>Access</a></li>
+              {this.props.user.level === 0 && <li><a className={(this.state.activeTab === 1) ? "is-active": ""} onClick={this.handleSidebarClick}>Access</a></li>}
               <li><a className={(this.state.activeTab === 2) ? "is-active": ""} onClick={this.handleSidebarClick}>Network</a></li>
               <li><a onClick={this.handleSidebarClick}>Log out</a></li>
             </ul>
@@ -74,6 +80,6 @@ class LayoutPage extends Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LayoutPage)

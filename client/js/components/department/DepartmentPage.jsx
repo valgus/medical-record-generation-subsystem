@@ -11,7 +11,7 @@ import Message from '../shared/Message.jsx'
 import departmentService from '../../services/department.js'
 
 import * as generalActiosn from '../../store/actions/general'
-
+import Loading from '../Loading.jsx'
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -147,6 +147,9 @@ class DepartmentPage extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+    return (<Loading/>);
+  }
     return (
         <section className="content-wrapper">
             { this.state.message && <Message message={this.state.message} isError={this.state.isError} />}

@@ -71,8 +71,3 @@ const routes = (
 );
 
 export default routes;
-//  {/*Default route*/}
-//  <Redirect from="/" to="/plans" />
-// <Route path="/plans" component={PlansList} onEnter={requireAuth} />
-//   <Route path="/plans/:id" component={PlanStats} onEnter={requireAuth} />
-//   <Route path="/contact" component={ContactPage} onEnter={requireAuth} />

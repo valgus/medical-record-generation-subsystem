@@ -1,5 +1,6 @@
 var webpack = require('webpack');
-
+const https = require('https');
+const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/index');
 const passport = require('passport');
@@ -10,6 +11,12 @@ var express = new require('express');
 var port = 3000;
 
 const app = express();
+
+const sslOptions = {
+  key: fs.readFileSync('./server/config/key.pem'),
+  cert: fs.readFileSync('./server/config/certificate.pem')
+};
+
 
 // tell the app to look for static files in these directories
 app.use(express.static('./dist/'));
@@ -57,11 +64,13 @@ MongoClient.connect(config.generationdbMongoUrl, (err, database) => {
     const patientDb = database2.db('med-rec-management');
     app.set('patientdb', patientDb);
 
-    app.listen(port, function(error) {
+    const httpsServer = https.createServer(sslOptions, app);
+
+    httpsServer.listen(port, (error) => {
       if (error) {
         console.error(error);
       } else {
-        console.info('==> ??  Open up http://localhost:%s/ in your browser.', port);
+        console.info('==> ??  Open up https://localhost:%s/ in your browser.', port);
       }
     });
   });

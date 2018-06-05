@@ -10,6 +10,7 @@ import Message from '../../shared/Message.jsx'
 
 import medrecService from '../../../services/medrec.js'
 import departmentService from '../../../services/department.js'
+import Loading from '../../Loading.jsx'
 
 function mapStateToProps (state) {
   return {
@@ -79,19 +80,17 @@ class Folder extends Component {
          }
       }
     });
-    //if (!this.props.user.isOwner) {
-      departmentService.getUserDeps(this.props.user.id,  this.state.props.user.level, (err, res) => {
-        if(err){
-          console.log(err);
-          this.setState({
-            loading: false, message: "The problem with user department occured.", isError: true
-          });
-          return;
-        }
-        if (res.departments && res.departments.length > 0)
-          this.setState({departments: res.departments, depId: res.departments[0]._id});
-      });
-    //}
+    departmentService.getUserDeps(this.props.user.id,  this.props.user.level,  (err, departments) => {
+      if(err){
+        console.log(err);
+        this.setState({
+          loading: false, message: "The problem with user department occured.", isError: true
+        });
+        return;
+      }
+      if (departments && departments.length > 0)
+        this.setState({departments: departments, depId: departments[0]._id});
+    });
   }
 
   toggleTypeCheck() {
@@ -221,7 +220,9 @@ class Folder extends Component {
     }
 
   render() {
-    console.log(this.state.substrings);
+    if (this.state.loading) {
+    return (<Loading/>);
+  }
     return (
       <div className="content-wrapper">
             { this.state.message && <Message message={this.state.message} isError={this.state.isError} />}
