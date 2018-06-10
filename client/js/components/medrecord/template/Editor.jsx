@@ -16,6 +16,7 @@ class TemplateEditor extends React.Component {
     this.setChosenVariable = this.setChosenVariable.bind(this);
     this.handleChangedNotes = this.handleChangedNotes.bind(this);
     this.openDropDown = this.openDropDown.bind(this);
+    this.closeDropDown = this.closeDropDown.bind(this);
   }
 
   componentDidMount () {
@@ -97,6 +98,11 @@ class TemplateEditor extends React.Component {
     document.getElementById(id.toString()).classList.add('is-active')
   }
 
+  closeDropDown(e, id) {
+    e.preventDefault();
+    document.getElementById(id.toString()).classList.remove('is-active')
+  }
+
   render () {
     return (
       <div>
@@ -118,7 +124,7 @@ class TemplateEditor extends React.Component {
                     </span>
                   </button>
                 </div>
-                <div className="dropdown-menu" id={"dropdown-menu" + qn.id.toString()} role="menu">
+                <div className="dropdown-menu" id={"dropdown-menu" + qn.id.toString()} role="menu" onMouseLeave={(e) => {this.closeDropDown(e, qn.id)}}>
                   <div className="dropdown-content">
                     {qn.questions.map((q) => {
                       return (

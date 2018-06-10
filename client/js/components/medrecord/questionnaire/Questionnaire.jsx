@@ -39,6 +39,7 @@ class Questionnaire extends Component {
           type: 0,
           options: [],
           hidden: false,
+          isStrict: false,
           linkIndex: -1
         },
         questions: [],
@@ -66,6 +67,7 @@ class Questionnaire extends Component {
       this.save = this.save.bind(this);
       this.changeDepId = this.changeDepId.bind(this);
       this.clone  = this.clone.bind(this);
+      this.setIsStrict = this.setIsStrict.bind(this);
   }
 
   componentDidMount() {
@@ -251,6 +253,12 @@ class Questionnaire extends Component {
     this.setState({newQuestion});
   }
 
+  setIsStrict() {
+    const newQuestion = {...this.state.newQuestion};
+    newQuestion.isStrict = !newQuestion.isStrict;
+    this.setState({newQuestion});
+  }
+
   setAnswerFoNewQuestion(addToExisting, index) {
     const newQuestion = {...this.state.newQuestion};
     if (addToExisting) {
@@ -382,6 +390,10 @@ class Questionnaire extends Component {
                 )
               })
             }
+            <label className="checkbox is-small">
+              <input type="checkbox" className="is-small"  defaultChecked={newQuestion.isStrict} onChange={this.setIsStrict}/>
+              Show question only if the chosen options are selected.
+            </label>
           </p>)
             }
           </div> }
